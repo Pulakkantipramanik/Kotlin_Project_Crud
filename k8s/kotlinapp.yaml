@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kotlinapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kotlinapp
+  template:
+    metadata:
+      labels:
+        app: kotlinapp
+    spec:
+      containers:
+        - name: kotlinapp
+          image: kotlin-live-kotlinapp:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://db:5432/postgres
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kotlinapp
+spec:
+  type: NodePort
+  selector:
+    app: kotlinapp
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080

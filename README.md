@@ -273,6 +273,7 @@ Spring Boot Deployment
 
 NodePort Service
 
+
 Exposed on port 30080
 
 🚀 21. Deploy to Kubernetes
